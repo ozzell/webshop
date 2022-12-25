@@ -21,8 +21,9 @@ const Home: FC<HomeProps> = ({ productsData, bannerData }) => {
       </div>
 
       <div className="products-container">
-        {productsData
-          ?.map((product) => <Product key={product._id} {...product} />)}
+        {productsData?.map((product) => (
+          <Product key={product._id} {...product} />
+        ))}
       </div>
 
       <FooterBanner {...bannerData[1]} />
@@ -40,7 +41,7 @@ export const getServerSideProps = async () => {
   return {
     props: {
       productsData,
-      bannerData,
+      bannerData
     }
   }
 }

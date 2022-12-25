@@ -9,13 +9,13 @@ export default {
       type: 'array',
       of: [{ type: 'image' }],
       options: {
-        hotspot: true,
+        hotspot: true
       }
     },
     {
       name: 'name',
       title: 'Name',
-      type: 'string',
+      type: 'string'
     },
     {
       name: 'slug',
@@ -23,18 +23,18 @@ export default {
       type: 'slug',
       options: {
         source: 'name',
-        maxLength: 90,
+        maxLength: 90
       }
     },
     {
       name: 'price',
       title: 'Price',
-      type: 'number',
+      type: 'number'
     },
     {
       name: 'details',
       title: 'Details',
-      type: 'string',
+      type: 'string'
     }
   ]
 }
