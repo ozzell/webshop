@@ -1,18 +1,20 @@
 import React, { FC } from 'react'
 import { client } from 'lib/client'
+import { BannerData, ProductData } from 'types'
 import FooterBanner from 'components/FooterBanner'
 import HeroBanner from 'components/HeroBanner'
-import { Banner, Product } from 'types'
+import Product from 'components/Product'
 
 interface HomeProps {
-  productsData: Product[]
-  bannerData: Banner[]
+  productsData: ProductData[]
+  bannerData: BannerData[]
 }
 
 const Home: FC<HomeProps> = ({ productsData, bannerData }) => {
   return (
     <>
-    <HeroBanner {...bannerData[0]} />
+      <HeroBanner {...bannerData[0]} />
+
       <div className="products-heading">
         <h2>Best Selling Products</h2>
         <p>Speakers of many variations</p>
@@ -20,11 +22,10 @@ const Home: FC<HomeProps> = ({ productsData, bannerData }) => {
 
       <div className="products-container">
         {productsData
-          ?.map((product) => product.name)
-          .join(', ')}
+          ?.map((product) => <Product key={product._id} {...product} />)}
       </div>
 
-      <FooterBanner />
+      <FooterBanner {...bannerData[1]} />
     </>
   )
 }
