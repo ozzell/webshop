@@ -1,11 +1,19 @@
+interface Image {
+  _key: string
+  asset: {
+    _ref: string
+  }
+}
+
 export interface ProductData {
   _id: string
   name: string
-  image: string
+  image: Image[]
   slug: {
     current: string
   }
   price: number
+  details: string
 }
 
 export interface BannerData {
@@ -19,9 +27,9 @@ export interface BannerData {
   buttonText: string
   desc: string
   discount: number
-  image: {
-    asset: {
-      _ref: string
-    }
-  }
+  image: Image
+}
+
+export interface CartProduct extends ProductData {
+  quantity: number
 }

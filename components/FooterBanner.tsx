@@ -38,13 +38,15 @@ const FooterBanner: FC<BannerData> = ({
             <button>{buttonText}</button>
           </Link>
         </div>
-        <Image
-          width="555"
-          height="555"
-          src={urlFor(image).url()}
-          alt={product}
-          className="footer-banner-image"
-        />
+        {image && (
+          <Image
+            width="555"
+            height="555"
+            src={urlFor(image).url()}
+            alt={product}
+            className="footer-banner-image"
+          />
+        )}
       </div>
     </div>
   )

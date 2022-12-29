@@ -320,7 +320,7 @@ span.text-red {
   margin: 40px;
   text-align: center;
 }
-.empty-cart h3 {
+.empty-cart p {
   font-weight: 600;
   font-size: 20px;
 }
