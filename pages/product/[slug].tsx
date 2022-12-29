@@ -3,9 +3,10 @@ import { client, urlFor } from 'lib/client'
 import Image from 'next/image'
 import { ProductData } from 'types'
 import { GetStaticPaths } from 'next/types'
-import { AiFillStar, AiOutlineMinus, AiOutlinePlus, AiOutlineStar } from 'react-icons/ai'
-import Product from 'components/Product'
+import { AiFillStar, AiOutlineStar } from 'react-icons/ai'
 import { useStateContext } from 'context/StateContext'
+import Product from 'components/Product'
+import AddToCart from 'components/AddToCart'
 
 interface ProductDetailsProps {
   product: ProductData
@@ -14,7 +15,7 @@ interface ProductDetailsProps {
 const ProductDetails: FC<ProductDetailsProps> = ({ product, products }) => {
   const { _id, name, price, details, image } = product
   const [index, setIndex] = useState<number>(0)
-  const { incQty, decQty, qty, onAdd } = useStateContext()
+  const { qty, onAddToCart } = useStateContext()
 
   useEffect(() => {
     setIndex(0)
@@ -66,18 +67,10 @@ const ProductDetails: FC<ProductDetailsProps> = ({ product, products }) => {
           <p className="price">{price} €</p>
           <div className="quantity">
             <h4>Quantity:</h4>
-            <p className="quantity-desc">
-              <span className="minus" onClick={decQty}>
-                <AiOutlineMinus />
-              </span>
-              <span className="num">{qty}</span>
-              <span className="plus" onClick={incQty}>
-                <AiOutlinePlus />
-              </span>
-            </p>
+            <AddToCart />
           </div>
           <div className="buttons">
-            <button className="add-to-cart" onClick={() => onAdd(product, qty)}>
+            <button className="add-to-cart" onClick={() => onAddToCart(product, qty)}>
               Add to Cart
             </button>
             <button className="buy-now">Buy Now</button>

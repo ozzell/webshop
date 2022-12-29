@@ -1,14 +1,16 @@
-import { useStateContext } from 'context/StateContext'
-import { urlFor } from 'lib/client'
+import { useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useRef } from 'react'
-import { AiOutlineLeft, AiOutlineMinus, AiOutlinePlus, AiOutlineShopping } from 'react-icons/ai'
+import { AiOutlineLeft, AiOutlineShopping } from 'react-icons/ai'
 import { TiDeleteOutline } from 'react-icons/ti'
+import { useStateContext } from 'context/StateContext'
+import { urlFor } from 'lib/client'
+import AddToCart from './AddToCart'
 
 const Cart = () => {
   const cartRef = useRef<HTMLDivElement>(null)
-  const { totalPrice, totalQuantities, cartItems, setShowCart } = useStateContext()
+  const { totalPrice, totalQuantities, cartItems, setShowCart, removeItemFromCart } =
+    useStateContext()
 
   return (
     <div className="cart-wrapper" ref={cartRef}>
@@ -49,17 +51,9 @@ const Cart = () => {
                   </div>
                   <div className="flex bottom">
                     <div>
-                      <p className="quantity-desc">
-                        <span className="minus">
-                          <AiOutlineMinus />
-                        </span>
-                        <span className="num">{0}</span>
-                        <span className="plus">
-                          <AiOutlinePlus />
-                        </span>
-                      </p>
+                      <AddToCart usedInCart cartProduct={item} />
                     </div>
-                    <button className="remove-item">
+                    <button className="remove-item" onClick={() => removeItemFromCart(item)}>
                       <TiDeleteOutline />
                     </button>
                   </div>

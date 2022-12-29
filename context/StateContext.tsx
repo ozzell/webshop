@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useState } from 'react'
+import { createContext, ReactNode, SetStateAction, useContext, useState } from 'react'
 import toast from 'react-hot-toast'
 import { CartProduct, ProductData } from 'types'
 
@@ -8,10 +8,12 @@ interface ContextProps {
   totalPrice: number
   totalQuantities: number
   qty: number
-  incQty: () => void
-  decQty: () => void
-  onAdd: (product: ProductData, quantity: number) => void
+  setQty: (prevQty: SetStateAction<number>) => void
+  onAddToCart: (product: ProductData, quantity: number) => void
   setShowCart: (showCart: boolean) => void
+  incCartItemQty: (cartProduct: CartProduct) => void
+  decCartItemQty: (cartProduct: CartProduct) => void
+  removeItemFromCart: (cartProduct: CartProduct) => void
 }
 
 const Context = createContext<ContextProps | Record<string, never>>({})
@@ -23,10 +25,7 @@ export const StateContext = ({ children }: { children: ReactNode }) => {
   const [totalQuantities, setTotalQuantities] = useState<number>(0)
   const [qty, setQty] = useState<number>(1)
 
-  const incQty = () => setQty((prevQty) => prevQty + 1)
-  const decQty = () => setQty((prevQty) => (prevQty - 1 < 1 ? 1 : prevQty - 1))
-
-  const onAdd = (product: ProductData, quantity = 1) => {
+  const toggleProductInCart = (product: ProductData, quantity: number) => {
     setTotalPrice((prevTotalPrice) => prevTotalPrice + product.price * quantity)
     setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + quantity)
 
@@ -43,7 +42,25 @@ export const StateContext = ({ children }: { children: ReactNode }) => {
     } else {
       setCartItems([...cartItems, { ...product, quantity }])
     }
+  }
+
+  const onAddToCart = (product: ProductData, quantity = 1) => {
+    toggleProductInCart(product, quantity)
     toast.success(`${qty} ${product.name} added to cart`)
+  }
+
+  const incCartItemQty = (cartProduct: CartProduct) => {
+    toggleProductInCart(cartProduct, 1)
+  }
+
+  const decCartItemQty = (cartProduct: CartProduct) => {
+    if (cartProduct.quantity - 1 > 0) toggleProductInCart(cartProduct, -1)
+  }
+
+  const removeItemFromCart = (cartProduct: CartProduct) => {
+    setCartItems(cartItems.filter((item) => item._id !== cartProduct._id))
+    setTotalPrice((prevTotalPrice) => prevTotalPrice - cartProduct.price * cartProduct.quantity)
+    setTotalQuantities((prevTotalQuantities) => prevTotalQuantities - cartProduct.quantity)
   }
 
   return (
@@ -54,10 +71,12 @@ export const StateContext = ({ children }: { children: ReactNode }) => {
         totalPrice,
         totalQuantities,
         qty,
-        incQty,
-        decQty,
-        onAdd,
-        setShowCart
+        setQty,
+        onAddToCart,
+        setShowCart,
+        incCartItemQty,
+        decCartItemQty,
+        removeItemFromCart
       }}>
       {children}
     </Context.Provider>
