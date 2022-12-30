@@ -7,6 +7,7 @@ import { AiFillStar, AiOutlineStar } from 'react-icons/ai'
 import { useStateContext } from 'context/StateContext'
 import Product from 'components/Product'
 import AddToCart from 'components/AddToCart'
+import { handleCheckout } from 'utils/checkout-helpers'
 
 interface ProductDetailsProps {
   product: ProductData
@@ -73,7 +74,11 @@ const ProductDetails: FC<ProductDetailsProps> = ({ product, products }) => {
             <button className="add-to-cart" onClick={() => onAddToCart(product, qty)}>
               Add to Cart
             </button>
-            <button className="buy-now">Buy Now</button>
+            <button
+              className="buy-now"
+              onClick={() => handleCheckout([{ ...product, quantity: 1 }])}>
+              Buy Now
+            </button>
           </div>
         </div>
       </div>

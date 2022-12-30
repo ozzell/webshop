@@ -6,6 +6,7 @@ import { TiDeleteOutline } from 'react-icons/ti'
 import { useStateContext } from 'context/StateContext'
 import { urlFor } from 'lib/client'
 import AddToCart from './AddToCart'
+import { handleCheckout } from 'utils/checkout-helpers'
 
 const Cart = () => {
   const cartRef = useRef<HTMLDivElement>(null)
@@ -68,7 +69,9 @@ const Cart = () => {
               <span>{totalPrice} €</span>
             </div>
             <div className="btn-container">
-              <button className="btn">Pay</button>
+              <button className="btn" onClick={() => handleCheckout(cartItems)}>
+                Pay
+              </button>
             </div>
           </div>
         )}
