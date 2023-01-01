@@ -1,6 +1,8 @@
-import { createContext, ReactNode, SetStateAction, useContext, useState } from 'react'
+import { createContext, ReactNode, SetStateAction, useContext, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { CartProduct, ProductData } from 'types'
+
+const CART_KEY = 'cartItems'
 
 interface ContextProps {
   showCart: boolean
@@ -14,6 +16,7 @@ interface ContextProps {
   incCartItemQty: (cartProduct: CartProduct) => void
   decCartItemQty: (cartProduct: CartProduct) => void
   removeItemFromCart: (cartProduct: CartProduct) => void
+  clearCart: () => void
 }
 
 const Context = createContext<ContextProps | Record<string, never>>({})
@@ -25,13 +28,30 @@ export const StateContext = ({ children }: { children: ReactNode }) => {
   const [totalQuantities, setTotalQuantities] = useState<number>(0)
   const [qty, setQty] = useState<number>(1)
 
+  useEffect(() => {
+    const cartItems = localStorage.getItem(CART_KEY)
+    if (cartItems) {
+      const parsedCartItems = JSON.parse(cartItems)
+      setCartItems(parsedCartItems)
+      setTotalPrice(
+        parsedCartItems.reduce(
+          (acc: number, item: CartProduct) => acc + item.price * item.quantity,
+          0
+        )
+      )
+      setTotalQuantities(
+        parsedCartItems.reduce((acc: number, item: CartProduct) => acc + item.quantity, 0)
+      )
+    }
+  }, [])
+
   const toggleProductInCart = (product: ProductData, quantity: number) => {
     setTotalPrice((prevTotalPrice) => prevTotalPrice + product.price * quantity)
     setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + quantity)
 
-    const checkProductInCart = cartItems.find((item) => item._id === product._id)
+    const productAlreadyInCart = cartItems.find((item) => item._id === product._id)
 
-    if (checkProductInCart) {
+    if (productAlreadyInCart) {
       const updatedCartItems = cartItems.map((cartProduct) => {
         if (cartProduct._id === product._id) {
           return { ...cartProduct, quantity: cartProduct.quantity + quantity }
@@ -39,8 +59,11 @@ export const StateContext = ({ children }: { children: ReactNode }) => {
         return cartProduct
       })
       setCartItems(updatedCartItems)
+      localStorage.setItem(CART_KEY, JSON.stringify(updatedCartItems))
     } else {
-      setCartItems([...cartItems, { ...product, quantity }])
+      const updatedCartItems = [...cartItems, { ...product, quantity }]
+      setCartItems(updatedCartItems)
+      localStorage.setItem(CART_KEY, JSON.stringify(updatedCartItems))
     }
   }
 
@@ -63,6 +86,13 @@ export const StateContext = ({ children }: { children: ReactNode }) => {
     setTotalQuantities((prevTotalQuantities) => prevTotalQuantities - cartProduct.quantity)
   }
 
+  const clearCart = () => {
+    setCartItems([])
+    setTotalPrice(0)
+    setTotalQuantities(0)
+    localStorage.removeItem(CART_KEY)
+  }
+
   return (
     <Context.Provider
       value={{
@@ -76,7 +106,8 @@ export const StateContext = ({ children }: { children: ReactNode }) => {
         setShowCart,
         incCartItemQty,
         decCartItemQty,
-        removeItemFromCart
+        removeItemFromCart,
+        clearCart
       }}>
       {children}
     </Context.Provider>

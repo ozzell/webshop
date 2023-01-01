@@ -607,6 +607,9 @@ span.text-red {
 .product-max-qty {
   margin-top: 10px;
 }
+.continue-shopping-btn {
+  width: 300px;
+}
 
 @media screen and (max-width: 800px) {
   .hero-banner-container {
