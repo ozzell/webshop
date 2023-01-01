@@ -26,26 +26,32 @@ const AddToCart: FC<AddToCartProps> = ({ cartProduct, usedInCart = false }) => {
   if (usedInCart && cartProduct) {
     return (
       <div className="quantity-desc">
-        <span className="minus" onClick={() => decCartItemQty(cartProduct)}>
+        <button
+          disabled={cartProduct.quantity <= 1}
+          className="minus"
+          onClick={() => decCartItemQty(cartProduct)}>
           <AiOutlineMinus />
+        </button>
+        <span className="num" aria-label="Quantity">
+          {cartProduct.quantity}
         </span>
-        <span className="num">{cartProduct.quantity}</span>
-        <span className="plus" onClick={() => incCartItemQty(cartProduct)}>
+        <button className="plus" onClick={() => incCartItemQty(cartProduct)}>
           <AiOutlinePlus />
-        </span>
+        </button>
       </div>
     )
   }
-  // @ TODO minus and plus should be button elements and add disabled attribute when qty is 1
   return (
     <div className="quantity-desc">
-      <span className="minus" onClick={decQty}>
+      <button disabled={qty <= 1} className="minus" onClick={decQty} aria-label="Decrease quantity">
         <AiOutlineMinus />
+      </button>
+      <span className="num" aria-label="Quantity">
+        {qty}
       </span>
-      <span className="num">{qty}</span>
-      <span className="plus" onClick={incQty}>
+      <button className="plus" onClick={incQty} aria-label="Increase quantity">
         <AiOutlinePlus />
-      </span>
+      </button>
     </div>
   )
 }

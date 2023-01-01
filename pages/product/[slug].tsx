@@ -63,11 +63,11 @@ const ProductDetails: FC<ProductDetailsProps> = ({ product, products }) => {
             </div>
             <p>(20)</p>
           </div>
-          <h4>Details</h4>
+          <span>Details</span>
           <p>{details}</p>
           <p className="price">{price} €</p>
           <div className="quantity">
-            <h4>Quantity:</h4>
+            <span>Quantity:</span>
             <AddToCart />
           </div>
           <div className="buttons">
@@ -83,7 +83,6 @@ const ProductDetails: FC<ProductDetailsProps> = ({ product, products }) => {
         </div>
       </div>
       <div className="maylike-products-wrapper">
-        {/* Accessibility issue */}
         <h2>You may also like</h2>
         <div className="marquee">
           <div className="maylike-products-container track">

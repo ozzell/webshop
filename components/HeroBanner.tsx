@@ -27,8 +27,8 @@ const HeroBanner: FC<BannerData> = ({
         <h4>{largeText1}</h4>
         {image && (
           <Image
-            width="555"
-            height="555"
+            width="450"
+            height="450"
             src={urlFor(image).url()}
             alt="headphones"
             className="hero-banner-image"
