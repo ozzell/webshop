@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import Stripe from 'stripe'
 import { CartProduct } from 'types'
-import { SANITY_PROJECT_ID, SANITY_DATA_SET } from 'ecommerce/sanity.config'
 
 const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY ?? '', {
   apiVersion: '2020-08-27'
@@ -14,7 +13,10 @@ const getErrorMsg = (error: unknown) => {
 
 const parseImgString = (imgString: string) =>
   imgString
-    .replace('image-', `https://cdn.sanity.io/images/${SANITY_PROJECT_ID}/${SANITY_DATA_SET}/`)
+    .replace(
+      'image-',
+      `https://cdn.sanity.io/images/${process.env.SANITY_PROJECT_ID}/${process.env.SANITY_DATA_SET}/`
+    )
     .replace('-webp', '.webp')
     .replace('-jpg', '.jpg')
     .replace('-png', '.png')
