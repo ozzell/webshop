@@ -15,7 +15,7 @@ const parseImgString = (imgString: string) =>
   imgString
     .replace(
       'image-',
-      `https://cdn.sanity.io/images/${process.env.SANITY_PROJECT_ID}/${process.env.SANITY_DATA_SET}/`
+      `https://cdn.sanity.io/images/${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}/${process.env.NEXT_PUBLIC_SANITY_DATA_SET}/`
     )
     .replace('-webp', '.webp')
     .replace('-jpg', '.jpg')

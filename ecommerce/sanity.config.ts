@@ -7,8 +7,8 @@ export default defineConfig({
   name: 'default',
   title: 'ecommerce',
 
-  projectId: process.env.SANITY_PROJECT_ID ?? '',
-  dataset: process.env.SANITY_DATA_SET ?? '',
+  projectId: import.meta.env.SANITY_STUDIO_API_PROJECT_ID,
+  dataset: import.meta.env.SANITY_STUDIO_API_DATASET,
 
   plugins: [deskTool(), visionTool()],
 
