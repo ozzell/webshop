@@ -84,6 +84,10 @@ export const StateContext = ({ children }: { children: ReactNode }) => {
     setCartItems(cartItems.filter((item) => item._id !== cartProduct._id))
     setTotalPrice((prevTotalPrice) => prevTotalPrice - cartProduct.price * cartProduct.quantity)
     setTotalQuantities((prevTotalQuantities) => prevTotalQuantities - cartProduct.quantity)
+    localStorage.setItem(
+      CART_KEY,
+      JSON.stringify(cartItems.filter((item) => item._id !== cartProduct._id))
+    )
   }
 
   const clearCart = () => {
