@@ -1,6 +1,6 @@
-import { urlFor } from 'lib/client'
 import Image from 'next/image'
 import Link from 'next/link'
+import { urlFor } from 'pages/api/sanity-client'
 import { FC } from 'react'
 import { BannerData } from 'types'
 

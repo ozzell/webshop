@@ -1,5 +1,4 @@
 import { FC, useEffect, useState } from 'react'
-import { client, urlFor } from 'lib/client'
 import Image from 'next/image'
 import { ProductData } from 'types'
 import { GetStaticPaths } from 'next/types'
@@ -8,6 +7,7 @@ import { useStateContext } from 'context/StateContext'
 import Product from 'components/Product'
 import AddToCart from 'components/AddToCart'
 import { handleCheckout } from 'utils/checkout-helpers'
+import { client, urlFor } from 'pages/api/sanity-client'
 
 interface ProductDetailsProps {
   product: ProductData

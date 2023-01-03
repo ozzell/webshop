@@ -4,9 +4,9 @@ import Image from 'next/image'
 import { AiOutlineLeft, AiOutlineShopping } from 'react-icons/ai'
 import { TiDeleteOutline } from 'react-icons/ti'
 import { useStateContext } from 'context/StateContext'
-import { urlFor } from 'lib/client'
 import AddToCart from './AddToCart'
 import { handleCheckout } from 'utils/checkout-helpers'
+import { urlFor } from 'pages/api/sanity-client'
 
 const Cart = () => {
   const cartRef = useRef<HTMLDivElement>(null)

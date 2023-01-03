@@ -1,8 +1,8 @@
 import { FC } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { urlFor } from 'lib/client'
 import { BannerData } from 'types'
+import { urlFor } from 'pages/api/sanity-client'
 
 // @ TODO image size issue
 const HeroBanner: FC<BannerData> = ({

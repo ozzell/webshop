@@ -1,11 +1,11 @@
 import React, { FC, useEffect } from 'react'
-import { client } from 'lib/client'
 import { BannerData, ProductData } from 'types'
 import FooterBanner from 'components/FooterBanner'
 import HeroBanner from 'components/HeroBanner'
 import Product from 'components/Product'
 import { useRouter } from 'next/router'
 import { toast } from 'react-hot-toast'
+import { client } from './api/sanity-client'
 
 interface HomeProps {
   productsData: ProductData[]
