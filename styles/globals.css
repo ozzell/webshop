@@ -614,11 +614,15 @@ span.text-red {
     width: 25%;
     height: 25%;
   }
+  .buttons {
+    flex-direction: column;
+  }
   .buttons .add-to-cart {
-    width: 150px;
+    width: 100%;
   }
   .buttons .buy-now {
-    width: 150px;
+    margin-top: 0;
+    width: 100%;
   }
   .product-detail-container {
     margin: 20px;
